@@ -26478,27 +26478,46 @@
 	  // set Initial State
 	  getInitialState: function getInitialState() {
 	    return {
-	      location: 'Kathmandu',
-	      temp: 88
+	      isLoading: false
 	    };
 	  },
 	  // create handle or function for search in which location is passed from the user input
 	  handleSearch: function handleSearch(location) {
 	    var self = this;
+
+	    debugger;
+	    // When someone start the search
+	    self.setState({ isLoading: true });
+
 	    openWeatherMap.getTemp(location).then(function (temp) {
 	      self.setState({
 	        location: location,
-	        temp: temp
+	        temp: temp,
+	        isLoading: false
 	      });
 	    }, function (errorMessage) {
+	      self.setState({ isLoading: false });
 	      alert(errorMessage);
 	    });
 	  },
 	  render: function render() {
 	    var _state = this.state,
+	        isLoading = _state.isLoading,
 	        temp = _state.temp,
 	        location = _state.location;
 
+
+	    function renderMessage() {
+	      if (isLoading) {
+	        return React.createElement(
+	          'h3',
+	          null,
+	          'Fetching weather...'
+	        );
+	      } else if (temp && location) {
+	        return React.createElement(WeatherMessage, { temp: temp, location: location });
+	      }
+	    }
 
 	    return React.createElement(
 	      'div',
@@ -26509,7 +26528,7 @@
 	        'Weather Component'
 	      ),
 	      React.createElement(WeatherForm, { onSearch: this.handleSearch }),
-	      React.createElement(WeatherMessage, { temp: temp, location: location })
+	      renderMessage()
 	    );
 	  }
 	});
@@ -26606,7 +26625,7 @@
 
 	// 'const' is a variable which cannot be alterd
 	// my openWeatherMap API Key ==> 8e4741aed70448704d9c343f23a9d7ed
-	var OPEN_WEATHER_MAP_URL = 'http://api.openweathermap.org/data/2.5/weather?appid=8e4741aed70448704d9c343f23a9d7ed&units=imperial';
+	var OPEN_WEATHER_MAP_URL = 'http://api.openweathermap.org/data/2.5/weather?appid=8e4741aed70448704d9c343f23a9d7ed';
 
 	module.exports = {
 	  getTemp: function getTemp(location) {
