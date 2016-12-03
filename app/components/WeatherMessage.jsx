@@ -1,9 +1,9 @@
 var React = require('react');
 
 // Create WeatherMessage/Result Component
-var WeatherMessage = ({temp, location}) => {  
+var WeatherMessage = ({temp, location}) => {
   return(
-    <h2>It's {temp} in {location}</h2>
+    <h3 className="text-center">It's {temp} in {location} .</h3>
   );
 }
 
