@@ -1,0 +1,10 @@
+.page-title{
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+input[type="search"] {
+  box-shadow: none;
+}
